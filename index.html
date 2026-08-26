@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AURA | Royal Jewelry Collection</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Three.js for 3D Product Viewing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement">
+    <span>Live Active Buyers: <strong id="live-users">124</strong></span> | 
+    <span>Your Mudra Balance: <strong id="mudra-gold">0 Gold</strong> / <strong id="mudra-silver">0 Silver</strong></span>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="logo">AURA JEWELS</div>
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search Gold, Diamond, Rings..." onkeyup="filterProducts()">
+    </div>
+    <div class="nav-actions">
+      <select id="sortPrice" onchange="sortProducts()">
+        <option value="default">Sort by Price</option>
+        <option value="low-high">Price: Low to High</option>
+        <option value="high-low">Price: High to Low</option>
+      </select>
+      <button id="wishlistBtn">Wishlist (<span id="wishlist-count">0</span>)</button>
+      <button id="cartBtn">Cart (<span id="cart-count">0</span>)</button>
+    </div>
+  </nav>
+
+  <!-- Category Filters -->
+  <div class="categories">
+    <button onclick="filterCategory('all')">All</button>
+    <button onclick="filterCategory('men')">Men</button>
+    <button onclick="filterCategory('women')">Women</button>
+  </div>
+
+  <!-- Main Showcase & Product Grid -->
+  <main class="container">
+    <section class="product-grid" id="productGrid">
+      <!-- Products dynamically loaded via JS -->
+    </section>
+  </main>
+
+  <!-- 3D Viewer Modal -->
+  <div id="3dModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="close3DModal()">&times;</span>
+      <h3>3D Interactive View</h3>
+      <div id="three-container"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
