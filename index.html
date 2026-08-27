@@ -1,3 +1,4 @@
+Html l
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,23 +6,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AURA | Royal Jewelry Collection</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Three.js for 3D Product Viewing -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
-  <!-- Announcement Bar -->
-  <div class="announcement">
-    <span>Live Active Buyers: <strong id="live-users">124</strong></span> | 
-    <span>Your Mudra Balance: <strong id="mudra-gold">0 Gold</strong> / <strong id="mudra-silver">0 Silver</strong></span>
+  <!-- Floating Welcome Tagline -->
+  <div class="welcome-container">
+    <div class="welcome-badge">
+      <span class="namaste-icon">🙏</span>
+      <span>Welcome to AURA Jewels</span>
+    </div>
   </div>
 
-  <!-- Navigation -->
+  <!-- Announcement Header -->
+  <div class="announcement">
+    <span>Live Active Buyers: <strong id="live-users">124</strong></span>
+  </div>
+
+  <!-- Main Navigation Header -->
   <nav class="navbar">
-    <div class="logo">maa ambe jewellers</div>
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Search Gold, Diamond, Rings..." onkeyup="filterProducts()">
+    <div class="nav-left">
+      <button class="menu-toggle" onclick="toggleSidebar()">☰ Menu</button>
+      <div class="logo-box">
+        <!-- SVG Vector Logo Choice A -->
+        <svg viewBox="0 0 100 100" class="site-logo">
+          <circle cx="50" cy="50" r="42" stroke="#D4AF37" stroke-width="4" fill="none"/>
+          <path d="M50 20 L80 80 L65 80 L50 48 L35 80 L20 80 Z" fill="#D4AF37"/>
+        </svg>
+        <span class="logo-text">AURA JEWELS</span>
+      </div>
     </div>
+
     <div class="nav-actions">
       <select id="sortPrice" onchange="sortProducts()">
         <option value="default">Sort by Price</option>
@@ -33,22 +48,65 @@
     </div>
   </nav>
 
-  <!-- Category Filters -->
+  <!-- Dedicated Search Bar Container (Sub Header) -->
+  <div class="search-bar-section">
+    <input type="text" id="searchInput" placeholder="Search Gold, Diamond, Rings..." onkeyup="filterProducts()">
+  </div>
+
+  <!-- Sliding Sidebar Menu -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h3>Customer Dashboard</h3>
+      <span class="close-sidebar" onclick="toggleSidebar()">&times;</span>
+    </div>
+    
+    <div class="sidebar-content">
+      <div class="user-profile-card">
+        <p><strong>Member ID:</strong> <span id="user-member-id">--</span></p>
+      </div>
+
+      <!-- Mudra Balance Box Inside Sidebar -->
+      <div class="mudra-box">
+        <h4>Mudra Balance</h4>
+        <div class="mudra-details">
+          <span>Gold: <strong id="mudra-gold">0</strong></span>
+          <span>Silver: <strong id="mudra-silver">0</strong></span>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li onclick="showUserDetailsModal()">👤 Show My Details</li>
+        <li onclick="toggleAdminPanel()">🛠️ Admin Control Panel</li>
+        <li onclick="filterCategory('all')">🛍️ All Products</li>
+        <li onclick="filterCategory('men')">🕺 Men's Collection</li>
+        <li onclick="filterCategory('women')">💃 Women's Collection</li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Category Selection -->
   <div class="categories">
-  <button onclick="filterCategory('all')" style="background:black; color:white; padding:10px 25px; border:2px solid red; border-radius:8px; font-size:16px;">All</button>
-   
+    <button onclick="filterCategory('all')">All</button>
     <button onclick="filterCategory('men')">Men</button>
     <button onclick="filterCategory('women')">Women</button>
   </div>
 
-  <!-- Main Showcase & Product Grid -->
+  <!-- Product Showcase Grid -->
   <main class="container">
-    <section class="product-grid" id="productGrid">
-      <!-- Products dynamically loaded via JS -->
-    </section>
+    <section class="product-grid" id="productGrid"></section>
   </main>
 
-  <!-- 3D Viewer Modal -->
+  <!-- Image HD Zoom Modal -->
+  <div id="imageModal" class="modal">
+    <div class="modal-content img-modal-content">
+      <span class="close" onclick="closeImageModal()">&times;</span>
+      <img id="hdModalImage" src="" alt="HD Product Preview">
+      <h3 id="hdModalTitle"></h3>
+      <p id="hdModalPrice" class="price"></p>
+    </div>
+  </div>
+
+  <!-- 3D Interactive Viewer Modal -->
   <div id="3dModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="close3DModal()">&times;</span>
@@ -56,6 +114,32 @@
       <div id="three-container"></div>
     </div>
   </div>
+
+  <!-- User Details Profile Modal -->
+  <div id="userModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeUserModal()">&times;</span>
+      <h3>Customer Account Overview</h3>
+      <br>
+      <p><strong>Permanent ID:</strong> <span id="profile-id">--</span></p>
+      <p><strong>Active Session Duration:</strong> <span id="session-time">0</span> seconds</p>
+      <p><strong>Total Mudra Earned:</strong> <span id="profile-mudra">0 Gold</span></p>
+    </div>
+  </div>
+
+  <!-- Admin Product Addition Panel -->
+  <div id="adminPanel" class="admin-panel">
+    <h3>Add New Product</h3>
+    <input type="text" id="newProdName" placeholder="Product Name">
+    <input type="number" id="newProdPrice" placeholder="Price (INR)">
+    <input type="text" id="newProdCat" placeholder="Category (men/women)">
+    <input type="text" id="newProdImg" placeholder="Image URL">
+    <input type="number" id="newProdMudra" placeholder="Fixed Mudra Reward">
+    <button onclick="addNewProduct()" class="btn-gold">Add to Catalog</button>
+  </div>
+
+  <!-- Live Buyer Notification Toast -->
+  <div id="buyer-toast" class="toast"></div>
 
   <script src="app.js"></script>
 </body>
