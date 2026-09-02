@@ -292,3 +292,9 @@ setInterval(() => {
   const liveUsers = Math.floor(Math.random() * (160 - 110 + 1)) + 110;
   document.getElementById('live-users').innerText = liveUsers;
 }, 3000);
+
+// No signup logic - clean file
+console.log('Royal Collection Loaded');
+// No signup logic - clean file
+console.log('Royal Collection Loaded');
+c
