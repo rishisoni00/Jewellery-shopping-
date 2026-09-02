@@ -1,7 +1,7 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
 // YAHAN DALNA HAI - YAHAN DALNA HAI - YAHAN DALNA HAI
-const SUPABASE_URL = 'YAHAN_APNA_URL_DALO'
+const SUPABASE_URL = 'https://enjdvhldvejmcvkxeqhz.supabase.co/rest/v1/'
 const SUPABASE_KEY = 'YAHAN_APNA_ANON_KEY_DALO'
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
